@@ -7,6 +7,7 @@ export function authMiddleware(req:Request,res:Response,next:NextFunction){
     console.log("token ======",token);
     const decodedToken=jwt.verify(token,JWT_SECRET);
     if(decodedToken){
+        console.log("token decoded successfully");
         req.userId =(decodedToken as jwt.JwtPayload).userId,
         next(); 
     }else {

@@ -135,7 +135,28 @@ router.post("/room",authMiddleware,async(req,res)=>{
         });
     }
 
-})
+});
+
+router.get("/chats/:roomId",async (req,res)=>{
+    const roomId=Number(req.params.roomId);
+    console.log(roomId);
+    try {
+        const messages=await prisma.chat.findMany({
+            where:{
+                roomId
+            },
+            orderBy:{
+                id:"desc"
+            },
+            take:50
+        });
+        res.status(201).json({
+            messages
+        });
+    } catch (error) {
+     console.log("fetching in the error",error);   
+    }
+});
 
 
 export default router;
