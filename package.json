@@ -1,6 +1,12 @@
 {
   "name": "wavvy-chat",
   "private": true,
+  "exports":{
+    "./globals.css": "./src/globals.css",
+    "./tailwind.config": "./tailwind.config.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -20,5 +26,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "tailwindcss": "^4.0.0"
+  }
 }
