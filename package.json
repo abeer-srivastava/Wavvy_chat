@@ -1,5 +1,5 @@
 {
-  "name": "WavvyChat",
+  "name": "wavvy-chat",
   "private": true,
   "scripts": {
     "build": "turbo run build",

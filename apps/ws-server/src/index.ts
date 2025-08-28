@@ -2,6 +2,7 @@ import { WebSocket, WebSocketServer } from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/backend-comman/config";
 import {prisma} from "@repo/db/client"
+
 interface User{
     ws:WebSocket,
     userId:string,
@@ -20,9 +21,7 @@ function checkUser(token:string):string|null{
         console.log("user not authenticated for ws");
         return null ;
     }
-    return (decodedToken as JwtPayload).userId;
-
-    
+    return (decodedToken as JwtPayload).userId;  
 }
 
 wss.on("connection",(ws,request)=>{
@@ -46,7 +45,6 @@ wss.on("connection",(ws,request)=>{
         rooms:[],
         ws
     })
-
 
     ws.on("message",async(data)=>{
         const parsedData=JSON.parse(data as unknown as string); //{type:"join_room","roomId":1}

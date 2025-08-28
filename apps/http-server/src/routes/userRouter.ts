@@ -19,7 +19,7 @@ declare global {
 router.post("/signup",async (req,res)=>{
 
     const body=req.body;
-    // add zod validations 
+    // added zod validations 
     const parsedData=CreateUserSchema.safeParse(body);
 
     if(!parsedData.success){
@@ -28,7 +28,6 @@ router.post("/signup",async (req,res)=>{
             message:"Incorrect Inputs"
         });
     }
-    // db
     try {
         const hashedPassword = await bcrypt.hash(parsedData.data?.password, 10);
         const createdUser = await prisma.user.create({
@@ -65,9 +64,7 @@ router.post("/signin",async (req,res)=>{
             message:"Incorrect Inputs"
         });
     }
-    // db call->for fetching the existing users else return no user exist
-    // after this sign the jwt token and then send it to along with the res
-
+   
    try {
      const existingUser = await prisma.user.findFirst({
          where: {
@@ -158,5 +155,22 @@ router.get("/chats/:roomId",async (req,res)=>{
     }
 });
 
+router.get("/room/:slug",async (req,res)=>{
+    const slug=req.params.slug;
+    const room=prisma.room.findFirst({
+        where:{
+            slug
+        }
+    });
+    if(!room){
+        return res.status(404).json({
+            message:"Slug not found"
+        });
+    }
+    return res.status(201).json({
+        message:"slug found",
+        room
+    });
+})
 
 export default router;
