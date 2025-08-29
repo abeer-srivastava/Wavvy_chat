@@ -100,7 +100,6 @@ pnpm dev --filter ws-server
 
 ## 📁 Project Architecture Diagram
 
-```mermaid
 flowchart TD
     FE[Next.js Frontend] -->|REST / GraphQL| HTTP[HTTP Server (Express + Prisma)]
     FE -->|WebSockets| WS[WebSocket Server]
