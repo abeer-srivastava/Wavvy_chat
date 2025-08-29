@@ -4,10 +4,11 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { HTTP_BACKEND_URL } from "../../../../config";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 function Room() {
     const roomRef=useRef<HTMLInputElement>(null)
     const [token,setToken]=useState<string>("");
-
+    const router=useRouter()
 
     useEffect(()=>{
         const storedToken=localStorage.getItem("token");
@@ -19,7 +20,9 @@ function Room() {
         }
         setToken(storedToken)
         console.log("token in the effect 2 ",token);
-    },[]);
+        // dependency error 
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
+    },[]); 
 
     const JoinHandleSubmit=async (e:React.FormEvent)=>{
         e.preventDefault();
@@ -43,8 +46,10 @@ function Room() {
              console.log("Room cannot be joined ");
              return;
          }
-         toast.message(`Room Joined with ID ${res.data.roomId}`)
+         const roomId=res.data.roomId;
+         toast.message(`Room Joined with ID ${roomId}`)
          console.log("the room is",res.data.roomId);
+         router.replace(`/chat/${roomId}`)
        } catch (error) {
         toast.warning("Cannot Join Room",{
             description:"ERROR OCCURED IN JOINING ROOM "
@@ -77,8 +82,11 @@ function Room() {
              console.log("room cannot be created ");
              return;
          }
-         toast.message(`Room Created with ID ${res.data.id}`)
-         console.log("the roomId is ",res.data.id);
+         const roomId=res.data.id;
+         toast.message(`Room Created with ID ${roomId}`)
+
+         console.log("the roomId is ",roomId);
+         router.replace(`/chat/${roomId}`);
         } catch (error) {
             console.log("error in creation of room ",error);
                     toast.warning("Cannot Create Room",{
@@ -87,9 +95,9 @@ function Room() {
         }
     }
     return (
-    <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
+    <div className="min-h-screen flex items-center justify-center bg-background text-main">
         <div className="w-full max-w-md p-8 bg-secondary-background rounded-2xl shadow-shadow border border-border">
-         <h2 className="text-2xl font-bold text-center mb-6">
+         <h2 className="text-2xl font-bold text-center mb-6 text-main">
             Create a Room | Join a Room
         </h2>
             <form className="space-y-4">

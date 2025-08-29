@@ -48,8 +48,10 @@ wss.on("connection",(ws,request)=>{
 
     ws.on("message",async(data)=>{
         const parsedData=JSON.parse(data as unknown as string); //{type:"join_room","roomId":1}
+        console.log(parsedData);
         if(parsedData.type==="join_room"){
             const user=users.find(x=>x.ws===ws);
+            console.log("userRoom",user?.rooms);
             user?.rooms.push(parsedData.roomId);
         }
         if(parsedData.type==="leave_room"){
@@ -58,7 +60,7 @@ wss.on("connection",(ws,request)=>{
                 console.log("user not found.")
                 return;
             }
-            user.rooms=user?.rooms.filter(x=>x===parsedData.roomId);
+            user.rooms=user?.rooms.filter(x=>x!==parsedData.roomId);
         }
         if(parsedData.type==="chat"){
             const roomId=parsedData.roomId

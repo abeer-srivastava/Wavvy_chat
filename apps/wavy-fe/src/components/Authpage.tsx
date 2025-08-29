@@ -35,11 +35,13 @@ function AuthPage({ isSignin  }: AuthPageProps) {
       }
     if(isSignIn){
       const token=res.data.token
+      const userId=res.data.userId;
     console.log(res.data.token);
       localStorage.setItem("token",token);
+      localStorage.setItem("userId",userId);
       router.replace("/room");
     }else{
-      router.replace("/signup");
+      setIsSignIn(true)
     }
 
   } catch (error) {

@@ -90,7 +90,8 @@ router.post("/signin",async (req,res)=>{
      const token = jwt.sign({ userId }, JWT_SECRET);
      return res.json({
          message: "User Signed IN",
-         token
+         token,
+         userId
      });
    } catch (error) {
     console.log("Error Occured  During Signup", error);
@@ -158,7 +159,7 @@ router.get("/chats/:roomId",async (req,res)=>{
 
 router.get("/room/:slug",async (req,res)=>{
     const slug=req.params.slug;
-    const room=prisma.room.findFirst({
+    const room=await prisma.room.findFirst({
         where:{
             slug
         }
@@ -170,8 +171,25 @@ router.get("/room/:slug",async (req,res)=>{
     }
     return res.status(201).json({
         message:"slug found",
-        room
+        roomId:room.id
     });
 })
+
+router.get("/room-list", authMiddleware, async (req, res) => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    try {
+        const rooms = await prisma.room.findMany({
+            where: { adminId: userId }
+        });
+        return res.json({ rooms });
+    } catch (error) {
+        console.log("Error fetching rooms", error);
+        return res.status(500).json({ message: "Error fetching rooms" });
+    }
+});
 
 export default router;
