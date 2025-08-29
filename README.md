@@ -14,32 +14,6 @@ It is modular, scalable, and designed for production-ready chat applications.
 
 ---
 
-## 📸 Screenshots
-
-
-
-```
-docs/
-  screenshots/
-    chat-ui.png
-    login.png
-    rooms.png
-```
-
-Then, reference them in your `README.md` like this:
-
-```md
-### 💬 Landing page
-![Landing Page](apps/wavy-fe/public/Landing.png)
-
-### 🔐 Chat Ui
-![LightChat Ui](apps/wavy-fe/public/LightChat.png)
-![DarkChat Ui](apps/wavy-fe/public/DarkChat.png)
-
-```
-
----
-
 ## 🏗️ Monorepo Structure
 
 ```
