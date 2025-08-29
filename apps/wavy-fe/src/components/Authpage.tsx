@@ -28,10 +28,20 @@ function AuthPage({ isSignin  }: AuthPageProps) {
       email,
       password,
     });
-    console.log(res.data);
-    if(res.data.userId){
-      router.replace("/signin");
+     if (!res.status) {
+        console.log(`Error occured during ${endpoint}`);
+        throw new Error(`Error Occured during ${endpoint}`)
+
+      }
+    if(isSignIn){
+      const token=res.data.token
+    console.log(res.data.token);
+      localStorage.setItem("token",token);
+      router.replace("/room");
+    }else{
+      router.replace("/signup");
     }
+
   } catch (error) {
     console.log("error in axios", error);
   }
