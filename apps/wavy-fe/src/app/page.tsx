@@ -4,9 +4,14 @@ import {  Users, Shield, Zap, ArrowRight, Star, Play } from 'lucide-react';
 import Navbar from "@/components/Navbar";
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 export default function LandingPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
+  const router=useRouter()
+  const handleSignupbutton=()=>{
+    router.replace("/signup")
+  }
 
   useEffect(() => {
     setIsVisible(true);
@@ -120,7 +125,7 @@ export default function LandingPage() {
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex-shrink-0"></div>
                   <div className="bg-background border border-border rounded-2xl px-4 py-2 max-w-[200px]">
-                    <p className="text-sm">Ready for tomorrow's exam? 📚</p>
+                    <p className="text-sm">Ready for tomorrow s exam? 📚</p>
                   </div>
                 </div>
                 
@@ -134,7 +139,7 @@ export default function LandingPage() {
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-green-500 rounded-full flex-shrink-0"></div>
                   <div className="bg-background border border-border rounded-2xl px-4 py-2 max-w-[200px]">
-                    <p className="text-sm">Great! Let's review together 🤝</p>
+                    <p className="text-sm">Great! Lets review together 🤝</p>
                   </div>
                 </div>
               </div>
@@ -226,7 +231,7 @@ export default function LandingPage() {
                   <Star key={i} className="w-4 h-4 text-main fill-current" />
                 ))}
               </div>
-              <p className="text-muted-foreground mb-4 italic">"{testimonial.content}"</p>
+              <p className="text-muted-foreground mb-4 italic">`{testimonial.content}`</p>
               <div>
                 <p className="font-semibold">{testimonial.name}</p>
                 <p className="text-sm text-muted-foreground">{testimonial.role}</p>
@@ -246,7 +251,7 @@ export default function LandingPage() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-          <Button >
+          <Button  onClick={handleSignupbutton}>
             Start Chatting Now
             <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
           </Button>

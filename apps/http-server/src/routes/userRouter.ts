@@ -20,6 +20,7 @@ router.post("/signup",async (req,res)=>{
 
     const body=req.body;
     // added zod validations 
+    console.log(body);
     const parsedData=CreateUserSchema.safeParse(body);
 
     if(!parsedData.success){
